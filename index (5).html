@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Brandon Pho – A vessel for California</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body, h1, h2, h3, p { margin: 0; padding: 0; }
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      font-family: "Times New Roman", serif;
+      line-height: 1.6;
+    }
+    #container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header { margin-bottom: 30px; }
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    header h2 {
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 20px;
+      color: #555555;
+    }
+    nav {
+      margin-bottom: 30px;
+      font-size: 13px;
+    }
+    nav a {
+      color: #333333;
+      text-decoration: none;
+      margin-right: 15px;
+    }
+    nav a:hover { text-decoration: underline; }
+    section { margin-bottom: 40px; }
+    section h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #5a5a5a;
+    }
+    p { margin-bottom: 12px; font-size: 14px; }
+    .feature-image {
+      width: 100%;
+      margin: 25px 0;
+      border-radius: 2px;
+    }
+    .sample { margin-bottom: 28px; }
+    .sample-title {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .sample-meta {
+      font-size: 12px;
+      color: #666666;
+      margin-bottom: 8px;
+    }
+    .footer {
+      font-size: 12px;
+      color: #777777;
+      text-align: center;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+
+    <header>
+      <h1>Brandon Pho</h1>
+      <h2>A vessel for California</h2>
+    </header>
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="about">
+      <h3>About Me</h3>
+      <img src="Untitled design (17) (1).jpg" alt="California desert landscape" class="feature-image" />
+      <p>I am a reporter and writer who focuses on the soil. All of the Golden State’s high-level issues, debates and talking points emerged from ground: municipal government, grassroots clubs, community meetings. My work focuses on how that ground is tilled.</p>
+    </section>
+
+    <section id="portfolio">
+      <h3>Selected Reporting</h3>
+
+      <div class="sample">
+        <div class="sample-title">
+          <a href="https://voiceofoc.org/2023/09/when-the-building-trades-align-with-anaheims-shadow-government/" target="_blank">
+            When the Building Trades Align with Anaheim’s Shadow Government
+          </a>
+        </div>
+        <div class="sample-meta">Voice of OC • 2023</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-title">
+          <a href="https://voiceofoc.org/2023/10/remembering-orange-countys-environmental-matriarch/" target="_blank">
+            Remembering Orange County’s Environmental Matriarch
+          </a>
+        </div>
+        <div class="sample-meta">Voice of OC • 2023</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-title">
+          <a href="https://voiceofoc.org/2023/07/will-hard-financial-straits-turn-westminster-into-a-city-of-lights/" target="_blank">
+            Will Hard Financial Straits Turn Westminster into a City of Lights?
+          </a>
+        </div>
+        <div class="sample-meta">Voice of OC • 2023</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-title">
+          <a href="https://voiceofoc.org/2023/03/how-a-coastal-highway-traffic-stop-led-to-cries-of-public-record-suppression/" target="_blank">
+            How a Coastal Highway Traffic Stop Led to Cries of Public Record Suppression
+          </a>
+        </div>
+        <div class="sample-meta">Voice of OC • 2023</div>
+      </div>
+
+      <div class="sample">
+        <div class="sample-title">
+          <a href="https://voiceofoc.org/2022/06/fbi-probe-pushes-anaheim-city-hall-and-chamber-of-commerce-apart-ahead-of-fourth-of-july-parade/" target="_blank">
+            FBI Probe Pushes Anaheim City Hall and Chamber of Commerce Apart Ahead of Fourth of July Parade
+          </a>
+        </div>
+        <div class="sample-meta">Voice of OC • 2022</div>
+      </div>
+
+    </section>
+
+    <section id="contact">
+      <h3>Contact</h3>
+      <p>For story tips, collaborations, or to get in touch:</p>
+      <p><strong>Email:</strong> <a href="mailto:brandonpho4698@gmail.com">brandonpho4698@gmail.com</a></p>
+    </section>
+
+    <div class="footer">
+      © <span id="year"></span> Brandon Pho
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
