@@ -71,10 +71,21 @@
       text-align: center;
       margin-top: 80px;
     }
+    .tiny-sound-toggle {
+      font-size: 11px;
+      color: #999;
+      cursor: pointer;
+    }
+    .tiny-sound-toggle:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Invisible audio element (no visible player) -->
+  <audio id="bg-audio" autoplay style="display:none;"></audio>
+
   <div id="container">
 
     <header>
@@ -155,13 +166,69 @@
     </section>
 
     <div class="footer">
+      <span class="tiny-sound-toggle" id="soundToggle">sound: off</span><br />
       © <span id="year"></span> Brandon Pho
     </div>
 
   </div>
 
   <script>
+    // Year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const audio = document.getElementById('bg-audio');
+    const toggle = document.getElementById('soundToggle');
+
+    // Playlist: your three tracks
+    const tracks = [
+      "the-butterfly.mp3",
+      "everybody-loves-my-girl.mp3",
+      "velvet-lady.mp3"
+    ];
+
+    let currentTrack = 0;
+
+    function setTrack(index) {
+      if (!audio || tracks.length === 0) return;
+      currentTrack = index % tracks.length;
+      audio.src = tracks[currentTrack];
+    }
+
+    if (audio && tracks.length > 0) {
+      setTrack(0);
+      audio.volume = 0.4;
+
+      // Try autoplay on load (may be blocked by browser)
+      audio.play().then(() => {
+        toggle.textContent = "sound: on";
+      }).catch(() => {
+        toggle.textContent = "sound: off";
+      });
+
+      // When a track ends, move to next track
+      audio.addEventListener("ended", () => {
+        setTrack((currentTrack + 1) % tracks.length);
+        audio.play().catch(() => {
+          toggle.textContent = "sound: off";
+        });
+      });
+    }
+
+    // Tiny sound toggle in footer
+    if (toggle && audio) {
+      toggle.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play().then(() => {
+            toggle.textContent = "sound: on";
+          }).catch(() => {
+            toggle.textContent = "sound: blocked";
+          });
+        } else {
+          audio.pause();
+          toggle.textContent = "sound: off";
+        }
+      });
+    }
   </script>
 </body>
 </html>
