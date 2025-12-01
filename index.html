@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Brandon Pho – humble farmer</title>
+  <title>Brandon Pho – Expert in soils</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -84,13 +84,13 @@
 
 <body>
   <!-- Invisible audio element (no visible player) -->
-  <audio id="bg-audio" autoplay style="display:none;"></audio>
+  <audio id="bg-audio" autoplay muted style="display:none;"></audio>
 
   <div id="container">
 
     <header>
       <h1>Brandon Pho</h1>
-      <h2>humble farmer</h2>
+      <h2>Expert in soils</h2>
     </header>
 
     <section id="about">
@@ -187,6 +187,7 @@
     ];
 
     let currentTrack = 0;
+    let interactionHandled = false;
 
     function setTrack(index) {
       if (!audio || tracks.length === 0) return;
@@ -194,35 +195,70 @@
       audio.src = tracks[currentTrack];
     }
 
-    if (audio && tracks.length > 0) {
-      setTrack(0);
+    function startPlaylist(unmute = false) {
+      if (!audio || tracks.length === 0) return;
+      if (!audio.src) {
+        setTrack(0);
+      }
       audio.volume = 0.4;
-
-      // Try autoplay on load (may be blocked by browser)
+      if (unmute) {
+        audio.muted = false;
+      }
       audio.play().then(() => {
-        toggle.textContent = "sound: on";
+        toggle.textContent = audio.muted ? "sound: off" : "sound: on";
       }).catch(() => {
         toggle.textContent = "sound: off";
       });
+    }
 
-      // When a track ends, move to next track
+    function handleFirstInteraction() {
+      if (interactionHandled || !audio) return;
+      interactionHandled = true;
+      audio.muted = false;
+      startPlaylist(true);
+
+      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+      window.removeEventListener("scroll", handleFirstInteraction);
+      window.removeEventListener("pointerdown", handleFirstInteraction);
+    }
+
+    if (audio && tracks.length > 0) {
+      // Initial setup: muted autoplay
+      setTrack(0);
+      audio.volume = 0.4;
+      audio.muted = true;
+      audio.play().then(() => {
+        // Playing silently in the background
+        toggle.textContent = "sound: off";
+      }).catch(() => {
+        // Even muted autoplay may fail on some browsers; fallback is user interaction
+        toggle.textContent = "sound: off";
+      });
+
+      // Loop through playlist
       audio.addEventListener("ended", () => {
         setTrack((currentTrack + 1) % tracks.length);
         audio.play().catch(() => {
           toggle.textContent = "sound: off";
         });
       });
+
+      // Listen for first interaction (anywhere on the page)
+      window.addEventListener("click", handleFirstInteraction);
+      window.addEventListener("keydown", handleFirstInteraction);
+      window.addEventListener("scroll", handleFirstInteraction);
+      window.addEventListener("pointerdown", handleFirstInteraction);
     }
 
     // Tiny sound toggle in footer
     if (toggle && audio) {
       toggle.addEventListener("click", () => {
         if (audio.paused) {
-          audio.play().then(() => {
-            toggle.textContent = "sound: on";
-          }).catch(() => {
-            toggle.textContent = "sound: blocked";
-          });
+          // On manual click, unmute and start playlist
+          audio.muted = false;
+          interactionHandled = true; // treat as user interaction
+          startPlaylist(true);
         } else {
           audio.pause();
           toggle.textContent = "sound: off";
